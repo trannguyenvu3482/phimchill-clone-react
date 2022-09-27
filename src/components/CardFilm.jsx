@@ -3,7 +3,7 @@ import { FaPlayCircle } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-const CardFilm = () => {
+const CardFilm = ({ big = false, ...props }) => {
   let navigate = useNavigate();
 
   const handleMovie = () => {
@@ -11,7 +11,7 @@ const CardFilm = () => {
   };
 
   return (
-    <Wrapper onClick={handleMovie}>
+    <Wrapper onClick={handleMovie} big={big}>
       <Image
         src="https://img.phimmoichills.net/images/film/chien-binh-cuoi-cung-coi-nguon-cua-quy.jpg"
         alt="image"
@@ -19,7 +19,7 @@ const CardFilm = () => {
       <Content>
         <Title>Chiến Binh Cuối Cùng: Cội Nguồn Của Quỷ</Title>
       </Content>
-      <Tag>HD | Vietsub</Tag>
+      <Tag big={big}>HD-Vietsub</Tag>
       <PlayIcon>
         <FaPlayCircle />
       </PlayIcon>
@@ -29,8 +29,10 @@ const CardFilm = () => {
 
 const Wrapper = styled.div`
   position: relative;
-  width: 255px;
-  height: 145px;
+  /* width: 255px; */
+  width: ${(props) => (props.big === true ? '100%' : '255px')};
+  /* height: 145px; */
+  height: ${(props) => (props.big === true ? '100%' : '145px')};
   background-color: #fff;
   /* background: url('https://img.phimmoichills.net/images/film/chien-binh-cuoi-cung-coi-nguon-cua-quy.jpg')
     no-repeat center center / cover; */
@@ -74,10 +76,19 @@ const Tag = styled.span`
   position: absolute;
   top: 0;
   left: 0;
-  padding: 4px 8px;
-  background-color: #ff0000;
+  /* padding: 4px 8px; */
+  padding: ${(props) => (props.big === true ? '10px 8px' : '4px 8px')};
+  /* background-color: #ff0000; */
+  background-size: 200% 100%;
+  background-image: linear-gradient(
+    to right,
+    #c02425 0%,
+    #f0cb35 51%,
+    #c02425 100%
+  );
   color: #fff;
-  font-size: 12px;
+  /* font-size: 12px; */
+  font-size: ${(props) => (props.big === true ? '14px' : '12px')};
   border-radius: 3px;
 
   // Add a triangle to the bottom center of the tag

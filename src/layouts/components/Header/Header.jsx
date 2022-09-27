@@ -109,6 +109,10 @@ const Wrapper = styled.div`
   padding: 0 60px;
   background-color: #121212;
   color: #fff;
+
+  @media (max-width: 768px) {
+    padding: 0 20px;
+  }
 `;
 
 const Logo = styled(Link)`
@@ -156,6 +160,10 @@ const ListRoutes = styled.ul`
       font-weight: bold;
     }
   }
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const Search = styled.div`
@@ -190,6 +198,10 @@ const Search = styled.div`
       color: #fff;
       font-size: 20px;
     }
+  }
+
+  @media (max-width: 768px) {
+    display: none;
   }
 `;
 
@@ -255,6 +267,10 @@ const LoginBtn = styled(Link)`
   &:hover {
     background-color: #ff0000;
   }
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const RegisterBtn = styled(Link)`
@@ -271,6 +287,10 @@ const RegisterBtn = styled(Link)`
 
   &:hover {
     background-color: #ff0000;
+  }
+
+  @media (max-width: 768px) {
+    display: none;
   }
 `;
 

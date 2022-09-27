@@ -1,6 +1,6 @@
 const routes = {
   home: '/',
-  list: '/list/:list-id',
+  list: '/list/:listId',
   info: '/info/:movieId',
   watch: '/xem/:movieId',
   search: '/tim-kiem/:query',
