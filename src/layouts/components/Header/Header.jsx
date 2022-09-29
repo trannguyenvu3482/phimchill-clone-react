@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import 'tippy.js/dist/tippy.css';
 import LogoPMC from '../../../assets/images/LogoPhimMoiChill.png';
-import listRoutes from './HeaderRoutes';
+import listRoutes from '../../../common/HeaderRoutes';
 
 const Header = () => {
   const [search, setSearch] = useState('');

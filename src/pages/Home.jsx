@@ -74,7 +74,7 @@ const Home = () => {
   return (
     <Wrapper>
       <Container>
-        <HomeFilmSlider />
+        <HomeFilmSlider title={'Phim đề cử'} />
         <HomeBigBlockFilm
           title="Phim lẻ mới cập nhật"
           to="phim-le"

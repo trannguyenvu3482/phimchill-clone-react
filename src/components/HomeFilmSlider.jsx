@@ -6,7 +6,7 @@ import 'slick-carousel/slick/slick.css';
 import styled from 'styled-components';
 import CardFilm from './CardFilm';
 
-const HomeFilmSlider = () => {
+const HomeFilmSlider = ({ title, small, big, ...props }) => {
   const sliderRef = useRef();
 
   let sliderSettings = {
@@ -22,7 +22,7 @@ const HomeFilmSlider = () => {
   return (
     <Wrapper>
       <Header>
-        <Title>Phim đề cử</Title>
+        <Title>{title}</Title>
       </Header>
       <PrevBtn onClick={(e) => sliderRef.current.slickPrev()}>
         <FaPlay />
