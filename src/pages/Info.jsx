@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import {
   Breadcrumb,
@@ -7,17 +7,36 @@ import {
   FilmPreview,
   HomeFilmSlider,
 } from '../components';
+import { getMovieDetails } from '../services/movieDetailsService';
 
 const Info = () => {
+  const [details, setDetails] = useState({});
+  const params = useParams();
+  const { movieId } = params;
+
+  useEffect(() => {
+    const fetchMovieDetails = async () => {
+      const movieDetails = await getMovieDetails(movieId);
+      console.log(movieDetails);
+      setDetails(movieDetails);
+    };
+
+    fetchMovieDetails();
+  }, [movieId]);
+
   return (
     <Wrapper>
       <Container>
-        <Breadcrumb movieName={'Minions'} />
-        <FilmPreview />
-        <FilmInfoDescriptions />
+        <Announce>
+          DuzFilm được xây dựng với mục đích cá nhân, không có mục đích thương
+          mại!
+        </Announce>
+        <Breadcrumb movieName={details?.title} />
+        <FilmPreview details={details} />
+        <FilmInfoDescriptions details={details} />
         <Sliders>
-          <HomeFilmSlider title={'Có thể bạn cũng muốn xem'} />
-          <HomeFilmSlider title={'Phim đề cử mới'} />
+          {/* <HomeFilmSlider title={'Có thể bạn cũng muốn xem'} /> */}
+          {/* <HomeFilmSlider title={'Phim đề cử mới'} /> */}
         </Sliders>
       </Container>
     </Wrapper>
@@ -35,5 +54,13 @@ const Container = styled.div`
 `;
 
 const Sliders = styled.div``;
+
+const Announce = styled.div`
+  background-color: #000;
+  color: #dcdcdc;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #e28604;
+`;
 
 export default Info;

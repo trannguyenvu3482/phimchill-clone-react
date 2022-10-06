@@ -8,7 +8,9 @@ const Footer = () => {
   return (
     <Wrapper>
       <Logo>
-        <img src={PMCLogo} alt="logo" />
+        <a href="https://facebook.com/DuzFromSOL">
+          <img src={PMCLogo} alt="logo" />
+        </a>
       </Logo>
       {footerLinks.map((item, index) => {
         return (
@@ -45,15 +47,14 @@ const Logo = styled.div`
   justify-content: center;
   width: 200px;
   img {
-    width: 185px;
-    height: 46px;
+    width: 100px;
+    height: 80px;
   }
 `;
 
 const FooterItem = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
 `;
 
 const Title = styled.h4`

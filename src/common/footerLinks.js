@@ -1,38 +1,5 @@
 const footerLinks = [
   {
-    title: 'Phim Mới',
-    links: [
-      {
-        name: 'Phim chiếu rạp',
-        link: '/',
-      },
-      {
-        name: 'Phim lẻ',
-        link: '/',
-      },
-      {
-        name: 'Phim bộ',
-        link: '/',
-      },
-      {
-        name: 'Phim hành động',
-        link: '/',
-      },
-      {
-        name: 'Phim viễn tưởng',
-        link: '/',
-      },
-      {
-        name: 'Phim tâm lý',
-        link: '/',
-      },
-      {
-        name: 'Phim hài hước',
-        link: '/',
-      },
-    ],
-  },
-  {
     title: 'Phim Hay',
     links: [
       {
@@ -69,7 +36,7 @@ const footerLinks = [
     title: 'Phim Hot',
     links: [
       {
-        name: 'Phimmoi',
+        name: 'DuzFilm',
         link: '/',
       },
       {

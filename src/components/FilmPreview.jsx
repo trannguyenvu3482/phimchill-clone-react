@@ -3,7 +3,7 @@ import { FaPlayCircle, FaRegPlayCircle, FaYoutube } from 'react-icons/fa';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
-const FilmPreview = ({ ...props }) => {
+const FilmPreview = ({ details, ...props }) => {
   // Get params from url with useParams hook
   const navigate = useNavigate();
   const { movieId } = useParams();
@@ -12,20 +12,20 @@ const FilmPreview = ({ ...props }) => {
   };
 
   return (
-    <Wrapper>
+    <Wrapper details={details}>
       <PlayIcon onClick={handleNavigate}>
         <FaPlayCircle />
       </PlayIcon>
       <FilmInfo>
         <PreviewImage>
           <img
-            src="https://img.phimmoichills.net/images/film/minions-ngoai-truyen-phan-1.jpg"
+            src={`https://image.tmdb.org/t/p/w500/${details?.backdrop_path}?language=vi`}
             alt=""
           />
         </PreviewImage>
         <PreviewInfo>
-          <FilmTitle>Minions Ngoại Truyện (Phần 1)</FilmTitle>
-          <FilmDesc>Minions & More Volume 1 (2022)</FilmDesc>
+          <FilmTitle>{details?.title}</FilmTitle>
+          <FilmDesc>{details?.original_title}</FilmDesc>
           <Buttons>
             <ButtonTrailer href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
               <FaYoutube />
@@ -46,9 +46,8 @@ const Wrapper = styled.div`
   position: relative;
   width: 100%;
   height: 490px;
-  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
-    url('https://chill-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&refresh=604800&url=https%3A%2F%2Fi0.wp.com%2Fimg.phimmoichills.net%2Fimages%2Finfo%2Fminions-more-volume-1.jpg')
-      no-repeat center center;
+  background: ${(props) =>
+    `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('https://image.tmdb.org/t/p/w500/${props.details?.backdrop_path}?language=vi') no-repeat center center`};
   background-size: cover;
   overflow: hidden;
 `;

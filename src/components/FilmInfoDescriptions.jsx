@@ -3,7 +3,7 @@ import { BsStar, BsStarFill } from 'react-icons/bs';
 import ReactStars from 'react-rating-stars-component';
 import styled from 'styled-components';
 
-const FilmInfoDescriptions = () => {
+const FilmInfoDescriptions = ({ details, ...props }) => {
   const [stars, setStars] = useState(10);
   const handleRatingChange = (stars) => {
     setStars(stars);

@@ -28,19 +28,11 @@ const HomeBigBlockFilm = (props = {}) => {
           </WatchButton>
         </RightHeader>
       </Header>
-      <FilmWrapper>
-        <CardFilm big />
-        <CardFilm />
-        <CardFilm />
-        <CardFilm />
-        <CardFilm />
-        <CardFilm />
-        <CardFilm />
-        <CardFilm />
-        <CardFilm />
-        <CardFilm />
-        <CardFilm />
-        <CardFilm />
+      <FilmWrapper rows={rows}>
+        <CardFilm big movieInfo={movies !== undefined && movies[0]} />
+        {movies?.slice(1, 12).map((movie) => {
+          return <CardFilm key={movie.id} movieInfo={movie}></CardFilm>;
+        })}
       </FilmWrapper>
     </Wrapper>
   );
@@ -132,10 +124,10 @@ const WatchButton = styled(Link)`
 const FilmWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(3, 1fr);
   grid-template-rows: ${(props) => `repeat(${props.rows}, 1fr)`};
   grid-gap: 10px;
   margin-top: 10px;
+  overflow: hidden;
 
   & > *:first-child {
     grid-column: span 2;

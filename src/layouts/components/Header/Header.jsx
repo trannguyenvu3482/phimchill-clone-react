@@ -116,11 +116,11 @@ const Wrapper = styled.div`
 `;
 
 const Logo = styled(Link)`
-  padding: 12px;
+  padding: 24px;
 
   img {
-    width: 150px;
-    height: 40px;
+    width: 60px;
+    height: 50px;
   }
 `;
 

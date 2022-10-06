@@ -1,106 +1,61 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import {
+  tagsPhimBo,
+  tagsPhimChieuRap,
+  tagsPhimLe,
+  tagsPhimThinhHanh,
+} from '../common/homeTags';
 import { HomeBigBlockFilm, HomeFilmSlider } from '../components';
+import { getUpcomingMovies } from '../services/upComingMoviesService';
 
 const Home = () => {
-  const tagsPhimLe = [
-    {
-      name: 'Hành động',
-      link: '/',
-    },
-    {
-      name: 'Hoạt hình',
-      link: '/',
-    },
-    {
-      name: 'Kinh dị',
-      link: '/',
-    },
-    {
-      name: 'Hài hước',
-      link: '/',
-    },
-  ];
+  const [upcomingMovies, setUpcomingMovies] = useState([]);
 
-  const tagsPhimBo = [
-    {
-      name: 'Hàn Quốc',
-      link: '/',
-    },
-    {
-      name: 'Trung Quốc',
-      link: '/',
-    },
-    {
-      name: 'Âu Mỹ',
-      link: '/',
-    },
-    {
-      name: 'Phim Bộ Full',
-      link: '/',
-    },
-  ];
+  useEffect(() => {
+    const fetchUpcomingMovies = async () => {
+      const { results } = await getUpcomingMovies({});
+      setUpcomingMovies((prevMovies) => [...prevMovies, ...results]);
+    };
 
-  const tagsPhimChieuRap = [
-    {
-      name: '2021',
-      link: '/',
-    },
-    {
-      name: '2020',
-      link: '/',
-    },
-    {
-      name: '2019',
-      link: '/',
-    },
-    {
-      name: '2018',
-      link: '/',
-    },
-  ];
-
-  const tagsPhimThinhHanh = [
-    {
-      name: 'Phim Lẻ Thịnh Hành',
-      link: '/',
-    },
-    {
-      name: 'Phim Bộ Thịnh Hành',
-      link: '/',
-    },
-  ];
+    fetchUpcomingMovies();
+  }, []);
 
   return (
     <Wrapper>
       <Container>
-        <HomeFilmSlider title={'Phim đề cử'} />
+        <HomeFilmSlider title={'Phim đề cử'} movies={upcomingMovies} />
         <HomeBigBlockFilm
           title="Phim lẻ mới cập nhật"
           to="phim-le"
           tags={tagsPhimLe}
+          movies={upcomingMovies}
         />
         <HomeBigBlockFilm
           title="Phim chiếu rạp"
           to="phim-chieu-rap"
           tags={tagsPhimChieuRap}
+          movies={upcomingMovies}
         />
         <HomeBigBlockFilm
           title="Phim bộ mới cập nhật"
           to="phim-bo"
           tags={tagsPhimBo}
+          movies={upcomingMovies}
         />
         <HomeBigBlockFilm
           title="Phim thịnh hành"
           to="phim-thinh-hanh"
           tags={tagsPhimThinhHanh}
           rows={2}
+          movies={upcomingMovies.slice(0, 7)}
         />
         <HomeBigBlockFilm
           title="Phim sắp chiếu"
           to="phim-sap-chieu"
           tags={[]}
           rows={2}
+          movies={upcomingMovies.slice(0, 7)}
         />
       </Container>
     </Wrapper>

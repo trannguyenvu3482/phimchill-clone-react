@@ -3,21 +3,21 @@ import { FaPlayCircle } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-const CardFilm = ({ big = false, ...props }) => {
+const CardFilm = ({ big = false, movieInfo = {}, ...props }) => {
   let navigate = useNavigate();
 
   const handleMovie = () => {
-    navigate(`/info/1`);
+    navigate(`/info/${movieInfo.id}`);
   };
 
   return (
     <Wrapper onClick={handleMovie} big={big}>
       <Image
-        src="https://img.phimmoichills.net/images/film/chien-binh-cuoi-cung-coi-nguon-cua-quy.jpg"
+        src={`https://image.tmdb.org/t/p/w500/${movieInfo?.backdrop_path}?language=vi`}
         alt="image"
       />
       <Content>
-        <Title>Chiến Binh Cuối Cùng: Cội Nguồn Của Quỷ</Title>
+        <Title>{movieInfo?.title}</Title>
       </Content>
       <Tag big={big}>HD-Vietsub</Tag>
       <PlayIcon>

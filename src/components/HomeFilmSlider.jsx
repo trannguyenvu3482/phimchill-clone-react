@@ -6,7 +6,7 @@ import 'slick-carousel/slick/slick.css';
 import styled from 'styled-components';
 import CardFilm from './CardFilm';
 
-const HomeFilmSlider = ({ title, small, big, ...props }) => {
+const HomeFilmSlider = ({ title, small, big, movies, ...props }) => {
   const sliderRef = useRef();
 
   let sliderSettings = {
@@ -28,20 +28,9 @@ const HomeFilmSlider = ({ title, small, big, ...props }) => {
         <FaPlay />
       </PrevBtn>
       <FilmSwiper {...sliderSettings} ref={sliderRef}>
-        <CardFilm />
-        <CardFilm />
-        <CardFilm />
-        <CardFilm />
-        <CardFilm />
-        <CardFilm />
-        <CardFilm />
-        <CardFilm />
-        <CardFilm />
-        <CardFilm />
-        <CardFilm />
-        <CardFilm />
-        <CardFilm />
-        <CardFilm />
+        {movies.map((movie, index) => {
+          return <CardFilm key={movie.id} movieInfo={movie}></CardFilm>;
+        })}
       </FilmSwiper>
       <NextBtn onClick={(e) => sliderRef.current.slickNext()}>
         <FaPlay />
