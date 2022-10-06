@@ -6,6 +6,7 @@ const routes = {
   search: '/tim-kiem/:query',
   login: '/login',
   register: '/register',
+  landing: '/landing',
 };
 
 export default routes;

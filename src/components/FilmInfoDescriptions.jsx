@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BsStar, BsStarFill } from 'react-icons/bs';
 import ReactStars from 'react-rating-stars-component';
 import styled from 'styled-components';
 
 const FilmInfoDescriptions = ({ details, ...props }) => {
   const [stars, setStars] = useState(10);
+  const [filmInfo, setFilmInfo] = useState({});
+
+  useEffect(() => {
+    setFilmInfo(details);
+  }, [details]);
+
   const handleRatingChange = (stars) => {
     setStars(stars);
-    console.log(stars);
   };
 
   return (
@@ -26,7 +31,10 @@ const FilmInfoDescriptions = ({ details, ...props }) => {
               onChange={handleRatingChange}
               classNames="stars"
             />
-            <RatingsCount>(10 đ/6 lượt)</RatingsCount>
+            <RatingsCount>
+              ({Math.floor(filmInfo.vote_average)} đ / {filmInfo.vote_count}{' '}
+              lượt)
+            </RatingsCount>
           </Ratings>
           <FilmInfoItems>
             <FilmInfoColumn>
@@ -40,20 +48,13 @@ const FilmInfoDescriptions = ({ details, ...props }) => {
               <FilmInfoItem>
                 <Title>Thể loại</Title>
                 {': '}
-                <Values>
-                  <Value>Phim Hoạt Hình</Value>
-                </Values>
-                {', '}
-                <Values>
-                  <Value>Phim Hài Hước</Value>
-                </Values>
-              </FilmInfoItem>
-              <FilmInfoItem>
-                <Title>Thời lượng</Title>
-                {': '}
-                <Values>
-                  <Value>48 phút</Value>
-                </Values>
+                {filmInfo.genres?.map((genre) => {
+                  return (
+                    <Values key={genre.id}>
+                      <Value>{genre.name}</Value>
+                    </Values>
+                  );
+                }) || null}
               </FilmInfoItem>
             </FilmInfoColumn>
 
@@ -62,64 +63,57 @@ const FilmInfoDescriptions = ({ details, ...props }) => {
                 <Title>Năm Phát Hành</Title>
                 {': '}
                 <Values>
-                  <Value>2022</Value>
+                  <Value>{filmInfo.release_date?.slice(0, 4)}</Value>
                 </Values>
               </FilmInfoItem>
               <FilmInfoItem>
-                <Title>Đạo diễn</Title>
+                <Title>Nhà sản xuất</Title>
                 {':'}
-                <Values>
-                  <Value>Van Robichaux</Value>
-                </Values>
-              </FilmInfoItem>
-              <FilmInfoItem>
-                <Title>Diễn viên</Title>
-                {':'}
-                <Values>
-                  <Value>Pierre Coffin</Value>
-                </Values>
-                {','}
-                <Values>
-                  <Value>Miranda Cosgrove</Value>
-                </Values>
-                {','}
-                <Values>
-                  <Value>Jessica DiCicco</Value>
-                </Values>
+                {filmInfo.production_companies
+                  ?.map((company) => {
+                    return (
+                      <Values key={company.id}>
+                        <Value>{company.name}</Value>
+                      </Values>
+                    );
+                  })
+                  ?.slice(0, 2) || null}
               </FilmInfoItem>
             </FilmInfoColumn>
             <FilmInfoColumn>
               <FilmInfoItem>
                 <Title>Quốc gia</Title>
                 {': '}
-                <Values>
-                  <Value>HD Vietsub</Value>
-                </Values>
+                {filmInfo.production_countries
+                  ?.map((country, index) => {
+                    return (
+                      <Values key={index}>
+                        <Value>{country.name}</Value>
+                      </Values>
+                    );
+                  })
+                  ?.slice(0, 2) || null}
               </FilmInfoItem>
               <FilmInfoItem>
-                <Title>Điểm IMDB</Title>
+                <Title>Số lần công chiếu</Title>
                 {': '}
-                <ImdbScore>7.1</ImdbScore>
+                <ImdbScore>{filmInfo.runtime}</ImdbScore>
               </FilmInfoItem>
             </FilmInfoColumn>
           </FilmInfoItems>
         </FilmInfo>
         <FilmDescription>
-          <FilmDescTitle>
-            Nội dung phim Minions Ngoại Truyện (Phần 1)
-          </FilmDescTitle>
+          <FilmDescTitle>Nội dung phim {filmInfo.title}</FilmDescTitle>
           <FilmDescInfo>
-            Minions Ngoại Truyện (Phần 1) Minions & More Volume 1 2022 Full HD
-            Vietsub Thuyết Minh là một bộ sưu tập phim ngắn của Minions từ loạt
-            phim “Despicable Me”, bao gồm các phim nhỏ như “Training Wheels”,
-            “Puppy” và “Yellow Is the New Black”.
+            {filmInfo.overview || 'Hiện phim chưa có nội dung'}
           </FilmDescInfo>
         </FilmDescription>
         <FilmTags>
           <FilmTagTitle>Thẻ</FilmTagTitle>
           <FilmTagList>
-            <FilmTagItem>Phim Hoạt Hình</FilmTagItem>
-            <FilmTagItem>Phim Hài Hước</FilmTagItem>
+            {filmInfo.genres?.map((genre) => {
+              return <FilmTagItem key={genre.id}>{genre.name}</FilmTagItem>;
+            }) || null}
           </FilmTagList>
         </FilmTags>
       </DescContainer>

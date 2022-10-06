@@ -17,7 +17,6 @@ const Info = () => {
   useEffect(() => {
     const fetchMovieDetails = async () => {
       const movieDetails = await getMovieDetails(movieId);
-      console.log(movieDetails);
       setDetails(movieDetails);
     };
 
@@ -34,10 +33,6 @@ const Info = () => {
         <Breadcrumb movieName={details?.title} />
         <FilmPreview details={details} />
         <FilmInfoDescriptions details={details} />
-        <Sliders>
-          {/* <HomeFilmSlider title={'Có thể bạn cũng muốn xem'} /> */}
-          {/* <HomeFilmSlider title={'Phim đề cử mới'} /> */}
-        </Sliders>
       </Container>
     </Wrapper>
   );

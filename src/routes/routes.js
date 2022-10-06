@@ -2,9 +2,18 @@
 import { routes } from '../configs';
 
 // Pages
-import { FilmList, Home, Info, Login, Register, Search } from '../pages/';
+import {
+  FilmList,
+  Home,
+  Info,
+  Landing,
+  Login,
+  Register,
+  Search,
+} from '../pages/';
 
 // Layouts
+import BlankNavbarLayout from '../layouts/BlankNavbarLayout/BlankNavbarLayout';
 import DefaultLayout from '../layouts/DefaultLayout/DefaultLayout';
 
 // Public routes
@@ -15,6 +24,7 @@ const publicRoutes = [
   { path: routes.login, component: Login, layout: DefaultLayout },
   { path: routes.register, component: Register, layout: DefaultLayout },
   { path: routes.list, component: FilmList, layout: DefaultLayout },
+  { path: routes.landing, component: Landing, layout: BlankNavbarLayout },
 ];
 
 // Private routes

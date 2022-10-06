@@ -41,7 +41,7 @@ const Login = () => {
 };
 
 const Wrapper = styled.div`
-  background-image: url('../images/AuthBackground.jpg');
+  background-image: url('../images/LandingPageBackground.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

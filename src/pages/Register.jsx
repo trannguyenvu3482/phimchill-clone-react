@@ -41,7 +41,7 @@ const Register = () => {
 };
 
 const Wrapper = styled.div`
-  background: url('https://assets.nflxext.com/ffe/siteui/vlv3/45082c39-e6d5-4b02-8867-e38fe32ed3af/e5b7469b-7098-4e7b-9830-6075c65a9d97/VN-en-20220919-popsignuptwoweeks-perspective_alpha_website_large.jpg');
+  background: url('../images/LandingPageBackground.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
