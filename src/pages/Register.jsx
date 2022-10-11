@@ -33,11 +33,11 @@ const Register = () => {
           </Form>
 
           <SocialRegister>
-            <button className="facebook-login">
+            <button type="button" className="facebook-login">
               <FaFacebookF />
               <span>Đăng ký với Facebook</span>
             </button>
-            <button className="google-login">
+            <button type="button" className="google-login">
               <FaGoogle />
               <span>Đăng ký với Google</span>
             </button>

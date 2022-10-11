@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { Breadcrumb, FilmInfoDescriptions, FilmPreview } from '../components';
@@ -42,8 +42,6 @@ const Container = styled.div`
   margin: 0 250px;
   margin-top: 80px;
 `;
-
-const Sliders = styled.div``;
 
 const Announce = styled.div`
   background-color: #000;

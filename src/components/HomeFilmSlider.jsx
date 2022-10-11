@@ -9,7 +9,7 @@ import CardFilm from './CardFilm';
 const HomeFilmSlider = ({ title, small, big, movies, ...props }) => {
   const sliderRef = useRef();
 
-  let sliderSettings = {
+  const sliderSettings = {
     infinite: true,
     speed: 500,
     slidesToShow: 5,

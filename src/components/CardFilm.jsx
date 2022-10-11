@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const CardFilm = ({ big = false, movieInfo = {}, ...props }) => {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleMovie = () => {
     navigate(`/info/${movieInfo.id}`);

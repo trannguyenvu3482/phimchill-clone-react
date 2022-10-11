@@ -6,16 +6,16 @@ import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import styled from 'styled-components';
 import {
-  selectUserName,
-  selectUserPhoto,
-  setUserLoginDetails,
-} from '../features/user/userSlice';
-import {
   auth,
   facebookProvider,
   googleProvider,
   signInWithPopup,
-} from '../firebase';
+} from '../configs/firebase';
+import {
+  selectUserName,
+  selectUserPhoto,
+  setUserLoginDetails,
+} from '../features/user/userSlice';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -24,7 +24,6 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userName = useSelector(selectUserName);
-  const userPhoto = useSelector(selectUserPhoto);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -79,7 +78,7 @@ const Login = () => {
   };
 
   useEffect(() => {
-    auth.onAuthStateChanged(async (user) => {
+    auth.onAuthStateChanged((user) => {
       if (user) {
         setUser(user);
         navigate('/home');
@@ -109,11 +108,19 @@ const Login = () => {
           </Form>
 
           <SocialLogins>
-            <button className="facebook-login" onClick={handleFacebookLogin}>
+            <button
+              type="button"
+              className="facebook-login"
+              onClick={handleFacebookLogin}
+            >
               <FaFacebookF />
               <span>Đăng nhập với Facebook</span>
             </button>
-            <button className="google-login" onClick={handleGoogleLogin}>
+            <button
+              type="button"
+              className="google-login"
+              onClick={handleGoogleLogin}
+            >
               <FaGoogle />
               <span>Đăng nhập với Google</span>
             </button>

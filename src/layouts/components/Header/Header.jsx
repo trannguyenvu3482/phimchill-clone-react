@@ -1,5 +1,5 @@
 import Tippy from '@tippyjs/react/headless';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
@@ -8,12 +8,12 @@ import styled from 'styled-components';
 import 'tippy.js/dist/tippy.css';
 import LogoPMC from '../../../assets/images/LogoPhimMoiChill.png';
 import listRoutes from '../../../common/HeaderRoutes';
+import { auth } from '../../../configs/firebase';
 import {
   selectUserName,
   selectUserPhoto,
   setSignOutState,
 } from '../../../features/user/userSlice';
-import { auth } from '../../../firebase';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -22,7 +22,7 @@ const Header = () => {
   const userPhoto = useSelector(selectUserPhoto);
   const [search, setSearch] = useState('');
 
-  const handleSearch = (e) => {
+  const handleSearch = () => {
     if (search === '') {
       alert(
         'Bạn chưa nhập từ khóa. (Không tính các ký tự đặc biệt vào độ dài từ khóa)'
@@ -64,12 +64,11 @@ const Header = () => {
                 <li key={index}>
                   {/* <Link to={route.path}>{route.name}</Link> */}
 
-                  {!!route.submenu === true ? (
+                  {Boolean(route.submenu) === true ? (
                     <Tippy
-                      // visible={true}
                       delay={[0, 0]}
                       placement="bottom"
-                      interactive={true}
+                      interactive
                       render={() => {
                         return (
                           <Submenu>
@@ -112,7 +111,7 @@ const Header = () => {
               value={search}
               onKeyDown={handleEnter}
             />
-            <button onClick={handleSearch}>
+            <button type="button" onClick={handleSearch}>
               <FaSearch />
             </button>
           </Search>
