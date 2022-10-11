@@ -8,7 +8,6 @@ import styled from 'styled-components';
 import {
   selectUserName,
   selectUserPhoto,
-  setSignOutState,
   setUserLoginDetails,
 } from '../features/user/userSlice';
 import {

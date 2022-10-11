@@ -1,8 +1,9 @@
 import Tippy from '@tippyjs/react/headless';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 import styled from 'styled-components';
 import 'tippy.js/dist/tippy.css';
 import LogoPMC from '../../../assets/images/LogoPhimMoiChill.png';
@@ -11,7 +12,6 @@ import {
   selectUserName,
   selectUserPhoto,
   setSignOutState,
-  setUserLoginDetails,
 } from '../../../features/user/userSlice';
 import { auth } from '../../../firebase';
 
@@ -48,7 +48,7 @@ const Header = () => {
         dispatch(setSignOutState());
         navigate('/');
       })
-      .catch((e) => console.log(e));
+      .catch((e) => toast.error(e.message));
   };
 
   return (
@@ -131,6 +131,7 @@ const Header = () => {
           </Dropdown>
         </UserInfo>
       )}
+      <ToastContainer />
     </Wrapper>
   );
 };

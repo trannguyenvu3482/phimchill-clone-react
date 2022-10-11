@@ -1,12 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import {
-  Breadcrumb,
-  FilmInfoDescriptions,
-  FilmPreview,
-  HomeFilmSlider,
-} from '../components';
+import { Breadcrumb, FilmInfoDescriptions, FilmPreview } from '../components';
 import { getMovieDetails } from '../services/movieDetailsService';
 
 const Info = () => {

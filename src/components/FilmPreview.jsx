@@ -7,6 +7,7 @@ const FilmPreview = ({ details, ...props }) => {
   // Get params from url with useParams hook
   const navigate = useNavigate();
   const { movieId } = useParams();
+
   const handleNavigate = () => {
     navigate(`/xem/${movieId}`);
   };

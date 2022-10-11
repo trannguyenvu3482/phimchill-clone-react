@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import 'tippy.js/dist/tippy.css';
 import LogoPMC from '../../../assets/images/LogoPhimMoiChill.png';

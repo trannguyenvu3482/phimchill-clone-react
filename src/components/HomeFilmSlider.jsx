@@ -28,7 +28,7 @@ const HomeFilmSlider = ({ title, small, big, movies, ...props }) => {
         <FaPlay />
       </PrevBtn>
       <FilmSwiper {...sliderSettings} ref={sliderRef}>
-        {movies.map((movie, index) => {
+        {movies.map((movie) => {
           return <CardFilm key={movie.id} movieInfo={movie}></CardFilm>;
         })}
       </FilmSwiper>
