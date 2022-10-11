@@ -19,9 +19,9 @@ import DefaultLayout from '../layouts/DefaultLayout/DefaultLayout';
 
 // Public routes
 const publicRoutes = [
-  { path: routes.login, component: Login, layout: BlankNavbarLayout },
-  { path: routes.register, component: Register, layout: BlankNavbarLayout },
-  { path: routes.landing, component: Landing, layout: BlankNavbarLayout },
+  { path: routes.login, component: Login, layout: DefaultLayout },
+  { path: routes.register, component: Register, layout: DefaultLayout },
+  { path: routes.landing, component: Landing, layout: DefaultLayout },
   { path: routes.error, component: Error, layout: DefaultLayout },
 ];
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import 'react-toastify/dist/ReactToastify.css';
 import { selectUserName } from '../features/user/userSlice';
 
 const PrivateRoute = ({ children }) => {

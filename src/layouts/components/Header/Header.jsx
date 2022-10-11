@@ -12,7 +12,7 @@ import { auth } from '../../../configs/firebase';
 import {
   selectUserName,
   selectUserPhoto,
-  setSignOutState,
+  setSignOutState
 } from '../../../features/user/userSlice';
 
 const Header = () => {
@@ -126,11 +126,11 @@ const Header = () => {
         <UserInfo>
           <UserImg src={userPhoto} alt={userName} />
           <Dropdown>
-            <span onClick={handleLogout}>Sign out</span>
+            <span onClick={handleLogout}>Đăng xuất</span>
           </Dropdown>
         </UserInfo>
       )}
-      <ToastContainer />
+      {userName && <ToastContainer />}
     </Wrapper>
   );
 };
@@ -346,6 +346,11 @@ const Dropdown = styled.div`
 
   span {
     letter-spacing: 1.5px;
+
+    &:hover {
+      color: #ff0000;
+      cursor: pointer;
+    }
   }
 `;
 
@@ -358,6 +363,7 @@ const UserInfo = styled.div`
   cursor: pointer;
   height: 50px;
   width: 50px;
+  margin-right: -75px;
 
   ${UserImg} {
     border-radius: 50%;
