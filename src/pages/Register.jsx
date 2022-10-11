@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaFacebookF, FaGoogle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Register = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const handleRegister = (e) => {
     e.preventDefault();
     alert('Register');
@@ -15,8 +17,18 @@ const Register = () => {
         <Content>
           <Title>Đăng ký</Title>
           <Form>
-            <Input type="text" placeholder="Email" />
-            <Input type="password" placeholder="Mật khẩu" />
+            <Input
+              type="text"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <Input
+              type="password"
+              placeholder="Mật khẩu"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
             <Button onClick={handleRegister}>Đăng ký</Button>
           </Form>
 

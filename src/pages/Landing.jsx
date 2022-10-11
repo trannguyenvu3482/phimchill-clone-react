@@ -1,10 +1,20 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import bgimg from '../assets/images/LandingPageBackground.jpg';
 import DuzFilmLogo from '../assets/images/LogoPhimMoiChill.png';
-
+import { selectUserName } from '../features/user/userSlice';
 const Landing = () => {
+  const userName = useSelector(selectUserName);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    document.title = 'Phim Mới Chill';
+    if (userName) {
+      navigate('/home');
+    }
+  }, [userName]);
   return (
     <Wrapper>
       <Container>

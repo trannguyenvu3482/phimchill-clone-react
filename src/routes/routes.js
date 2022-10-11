@@ -3,6 +3,7 @@ import { routes } from '../configs';
 
 // Pages
 import {
+  Error,
   FilmList,
   Home,
   Info,
@@ -18,16 +19,18 @@ import DefaultLayout from '../layouts/DefaultLayout/DefaultLayout';
 
 // Public routes
 const publicRoutes = [
-  { path: routes.home, component: Home, layout: DefaultLayout },
-  { path: routes.search, component: Search, layout: DefaultLayout },
-  { path: routes.info, component: Info, layout: DefaultLayout },
-  { path: routes.login, component: Login, layout: DefaultLayout },
-  { path: routes.register, component: Register, layout: DefaultLayout },
-  { path: routes.list, component: FilmList, layout: DefaultLayout },
+  { path: routes.login, component: Login, layout: BlankNavbarLayout },
+  { path: routes.register, component: Register, layout: BlankNavbarLayout },
   { path: routes.landing, component: Landing, layout: BlankNavbarLayout },
+  { path: routes.error, component: Error, layout: DefaultLayout },
 ];
 
 // Private routes
-const privateRoutes = [];
+const privateRoutes = [
+  { path: routes.search, component: Search, layout: DefaultLayout },
+  { path: routes.info, component: Info, layout: DefaultLayout },
+  { path: routes.list, component: FilmList, layout: DefaultLayout },
+  { path: routes.home, component: Home, layout: DefaultLayout },
+];
 
 export { publicRoutes, privateRoutes };

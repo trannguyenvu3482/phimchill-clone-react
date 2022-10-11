@@ -1,13 +1,92 @@
-import React from 'react';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import React, { useEffect, useState } from 'react';
 import { FaFacebookF, FaGoogle } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 import styled from 'styled-components';
+import {
+  selectUserName,
+  selectUserPhoto,
+  setSignOutState,
+  setUserLoginDetails,
+} from '../features/user/userSlice';
+import {
+  auth,
+  facebookProvider,
+  googleProvider,
+  signInWithPopup,
+} from '../firebase';
 
 const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const userName = useSelector(selectUserName);
+  const userPhoto = useSelector(selectUserPhoto);
+
   const handleLogin = (e) => {
     e.preventDefault();
-    alert('Login');
+
+    if (!email || !password) {
+      return toast.error('Vui lòng điền vào tất cả các trường');
+    }
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then((user) => {
+        dispatch(
+          setUserLoginDetails({
+            name: user.user.displayName,
+            email: user.user.email,
+            photo: user.user.photoURL,
+          })
+        );
+        navigate('/home');
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
   };
+
+  const handleGoogleLogin = async () => {
+    try {
+      const { user } = await signInWithPopup(auth, googleProvider);
+      setUser(user);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleFacebookLogin = async () => {
+    try {
+      const { user } = await signInWithPopup(auth, facebookProvider);
+      console.log(user);
+      setUser(user);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const setUser = (user) => {
+    dispatch(
+      setUserLoginDetails({
+        name: user.displayName,
+        email: user.email,
+        photo: user.photoURL,
+      })
+    );
+  };
+
+  useEffect(() => {
+    auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        setUser(user);
+        navigate('/home');
+      }
+    });
+  }, [userName]);
 
   return (
     <Wrapper>
@@ -15,17 +94,27 @@ const Login = () => {
         <Content>
           <Title>Đăng nhập</Title>
           <Form>
-            <Input type="text" placeholder="Email" />
-            <Input type="password" placeholder="Mật khẩu" />
+            <Input
+              type="text"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <Input
+              type="password"
+              placeholder="Mật khẩu"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
             <Button onClick={handleLogin}>Đăng nhập</Button>
           </Form>
 
           <SocialLogins>
-            <button className="facebook-login">
+            <button className="facebook-login" onClick={handleFacebookLogin}>
               <FaFacebookF />
               <span>Đăng nhập với Facebook</span>
             </button>
-            <button className="google-login">
+            <button className="google-login" onClick={handleGoogleLogin}>
               <FaGoogle />
               <span>Đăng nhập với Google</span>
             </button>
@@ -36,6 +125,7 @@ const Login = () => {
           </Footer>
         </Content>
       </Container>
+      <ToastContainer />
     </Wrapper>
   );
 };
@@ -102,6 +192,10 @@ const Button = styled.button`
   color: #fff;
   font-weight: 600;
   cursor: pointer;
+
+  &:hover {
+    background-color: #f40612;
+  }
 `;
 
 const SocialLogins = styled.div`

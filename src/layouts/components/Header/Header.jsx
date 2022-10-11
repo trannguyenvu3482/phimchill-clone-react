@@ -1,15 +1,26 @@
 import Tippy from '@tippyjs/react/headless';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import 'tippy.js/dist/tippy.css';
 import LogoPMC from '../../../assets/images/LogoPhimMoiChill.png';
 import listRoutes from '../../../common/HeaderRoutes';
+import {
+  selectUserName,
+  selectUserPhoto,
+  setSignOutState,
+  setUserLoginDetails,
+} from '../../../features/user/userSlice';
+import { auth } from '../../../firebase';
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const userName = useSelector(selectUserName);
+  const userPhoto = useSelector(selectUserPhoto);
   const [search, setSearch] = useState('');
-  let navigate = useNavigate();
 
   const handleSearch = (e) => {
     if (search === '') {
@@ -30,73 +41,96 @@ const Header = () => {
     }
   };
 
+  const handleLogout = () => {
+    auth
+      .signOut()
+      .then(() => {
+        dispatch(setSignOutState());
+        navigate('/');
+      })
+      .catch((e) => console.log(e));
+  };
+
   return (
     <Wrapper>
       <Logo to="/">
         <img src={LogoPMC} alt="" />
       </Logo>
-      <ListRoutes>
-        {listRoutes.map((route, index) => {
-          return (
-            <li key={index}>
-              {/* <Link to={route.path}>{route.name}</Link> */}
+      {userName && (
+        <>
+          <ListRoutes>
+            {listRoutes.map((route, index) => {
+              return (
+                <li key={index}>
+                  {/* <Link to={route.path}>{route.name}</Link> */}
 
-              {!!route.submenu === true ? (
-                <Tippy
-                  // visible={true}
-                  delay={[0, 0]}
-                  placement="bottom"
-                  interactive={true}
-                  render={() => {
-                    return (
-                      <Submenu>
-                        <div className="column column-1">
-                          {route.submenu[0].map((item, index) => {
-                            return (
-                              <div key={index}>
-                                <Link to={item.path}>{item.name}</Link>
-                              </div>
-                            );
-                          })}
-                        </div>
-                        <div className="column column-2">
-                          {route.submenu[1].map((item, index) => {
-                            return (
-                              <div key={index}>
-                                <Link to={item.path}>{item.name}</Link>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </Submenu>
-                    );
-                  }}
-                >
-                  <Link to={route.path}>{route.name}</Link>
-                </Tippy>
-              ) : (
-                <Link to={route.path}>{route.name}</Link>
-              )}
-            </li>
-          );
-        })}
-      </ListRoutes>
-      <Search>
-        <input
-          type="text"
-          placeholder="Tìm tên phim, diễn viên.."
-          onChange={(e) => setSearch(e.target.value)}
-          value={search}
-          onKeyDown={handleEnter}
-        />
-        <button onClick={handleSearch}>
-          <FaSearch />
-        </button>
-      </Search>
-      <User>
-        <LoginBtn to="/login">Đăng nhập</LoginBtn>
-        <RegisterBtn to="/register">Đăng ký</RegisterBtn>
-      </User>
+                  {!!route.submenu === true ? (
+                    <Tippy
+                      // visible={true}
+                      delay={[0, 0]}
+                      placement="bottom"
+                      interactive={true}
+                      render={() => {
+                        return (
+                          <Submenu>
+                            <div className="column column-1">
+                              {route.submenu[0].map((item, index) => {
+                                return (
+                                  <div key={index}>
+                                    <Link to={item.path}>{item.name}</Link>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                            <div className="column column-2">
+                              {route.submenu[1].map((item, index) => {
+                                return (
+                                  <div key={index}>
+                                    <Link to={item.path}>{item.name}</Link>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          </Submenu>
+                        );
+                      }}
+                    >
+                      <Link to={route.path}>{route.name}</Link>
+                    </Tippy>
+                  ) : (
+                    <Link to={route.path}>{route.name}</Link>
+                  )}
+                </li>
+              );
+            })}
+          </ListRoutes>
+          <Search>
+            <input
+              type="text"
+              placeholder="Tìm tên phim, diễn viên.."
+              onChange={(e) => setSearch(e.target.value)}
+              value={search}
+              onKeyDown={handleEnter}
+            />
+            <button onClick={handleSearch}>
+              <FaSearch />
+            </button>
+          </Search>
+        </>
+      )}
+      {!userName ? (
+        <Auth>
+          <LoginBtn to="/login">Đăng nhập</LoginBtn>
+          <RegisterBtn to="/register">Đăng ký</RegisterBtn>
+        </Auth>
+      ) : (
+        <UserInfo>
+          <UserImg src={userPhoto} alt={userName} />
+          <Dropdown>
+            <span onClick={handleLogout}>Sign out</span>
+          </Dropdown>
+        </UserInfo>
+      )}
     </Wrapper>
   );
 };
@@ -246,7 +280,7 @@ const Submenu = styled.div`
   }
 `;
 
-const User = styled.div`
+const Auth = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -291,6 +325,62 @@ const RegisterBtn = styled(Link)`
 
   @media (max-width: 768px) {
     display: none;
+  }
+`;
+
+const UserImg = styled.img`
+  height: 100%;
+`;
+
+const Dropdown = styled.div`
+  position: absolute;
+  top: 60px;
+  right: 0px;
+  background: rgb(19, 19, 19);
+  border: 1px solid rgba(151, 151, 151, 0.34);
+  border-radius: 4px;
+  box-shadow: rgb(0, 0, 0 / 50%) 0px 0px 18px 0px;
+  padding: 10px;
+  width: 100px;
+  opacity: 0;
+
+  span {
+    letter-spacing: 1.5px;
+  }
+`;
+
+const UserInfo = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: relative;
+  cursor: pointer;
+  height: 50px;
+  width: 50px;
+
+  ${UserImg} {
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+  }
+
+  &:hover {
+    ${Dropdown} {
+      opacity: 1;
+      transition-duration: 1s;
+    }
+  }
+
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    background-color: transparent;
+    height: 20px;
+    width: 45px;
+    top: 40px;
+    left: 0;
   }
 `;
 

@@ -1,6 +1,7 @@
 import { Fragment } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { publicRoutes } from './routes/routes';
+import PrivateRoute from './components/PrivateRoute';
+import { privateRoutes, publicRoutes } from './routes/routes';
 import ScrollToTop from './utils/ScrollToTop';
 
 function App() {
@@ -20,6 +21,24 @@ function App() {
                   <Layout>
                     <Page />
                   </Layout>
+                }
+              />
+            );
+          })}
+
+          {privateRoutes.map((route, index) => {
+            const Layout = route.layout || Fragment;
+            const Page = route.component;
+            return (
+              <Route
+                key={index}
+                path={route.path}
+                element={
+                  <PrivateRoute>
+                    <Layout>
+                      <Page />
+                    </Layout>
+                  </PrivateRoute>
                 }
               />
             );
