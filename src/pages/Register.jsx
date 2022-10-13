@@ -1,15 +1,76 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaFacebookF, FaGoogle } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 import styled from 'styled-components';
+import {
+  auth,
+  facebookProvider,
+  googleProvider,
+  signInWithPopup,
+} from '../configs/firebase';
+import {
+  selectUserName,
+  setUserLoginDetails,
+} from '../features/user/userSlice';
+import schema from '../utils/passwordValidator';
 
 const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const userName = useSelector(selectUserName);
+
   const handleRegister = (e) => {
     e.preventDefault();
-    alert('Register');
+    if (schema.validate(password)) {
+      toast.success('Đăng kí thành công');
+    } else {
+      schema.validate(password, { details: true }).forEach((error) => {
+        toast.error(error.message);
+      });
+    }
   };
+
+  const handleGoogleLogin = async () => {
+    try {
+      const { user } = await signInWithPopup(auth, googleProvider);
+      setUser(user);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleFacebookLogin = async () => {
+    try {
+      const { user } = await signInWithPopup(auth, facebookProvider);
+      console.log(user);
+      setUser(user);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const setUser = (user) => {
+    dispatch(
+      setUserLoginDetails({
+        name: user.displayName,
+        email: user.email,
+        photo: user.photoURL,
+      })
+    );
+  };
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUser(user);
+        Navigate('/home');
+      }
+    });
+  }, [userName]);
 
   return (
     <Wrapper>
@@ -48,6 +109,7 @@ const Register = () => {
           </Footer>
         </Content>
       </Container>
+      <ToastContainer />
     </Wrapper>
   );
 };

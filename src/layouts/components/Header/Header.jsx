@@ -4,6 +4,7 @@ import { FaSearch } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import styled from 'styled-components';
 import 'tippy.js/dist/tippy.css';
 import LogoPMC from '../../../assets/images/LogoPhimMoiChill.png';
@@ -12,7 +13,7 @@ import { auth } from '../../../configs/firebase';
 import {
   selectUserName,
   selectUserPhoto,
-  setSignOutState
+  setSignOutState,
 } from '../../../features/user/userSlice';
 
 const Header = () => {
